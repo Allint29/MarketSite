@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MyWebSite.Models.Entities;
 
 namespace MyWebSite.Models
 {
 
     /// <summary>
     /// security in Finam specification
-    /// контракт в спецификации финам
+    /// контракт в репозитории брокера
     /// </summary>
-    public class FinamSecurity
+    public class BrokerRepositorySecurity
     {
         public int Id { get; set; }
         
@@ -76,5 +77,16 @@ namespace MyWebSite.Models
         /// адрес на сайте
         /// </summary>
         public string Url { get; set; }
+
+        /// <summary>
+        /// Источник для данного инструмента из репозитория
+        /// </summary>
+        public int SourceSecurityId { get; set; } 
+        public SourceSecurity SourceSecurity { get; set; }
+
+        /// <summary>
+        /// список всех трейдов данного инструмента
+        /// </summary>
+        public List<ImpersonalTrade> ImpersonalTrades { get; set; }
     }
 }

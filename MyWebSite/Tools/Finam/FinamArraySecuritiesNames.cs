@@ -13,16 +13,16 @@ namespace MyWebSite.Tools
 {
     public static class FinamArraySecuritiesNames
     {
-        public async static Task<Dictionary<int, object>> GetSecurityComboList(string reg_str, bool for_select_list = false)
+        public async static Task<Dictionary<int, BrokerRepositorySecurity>> GetSecurityComboList(string reg_str)
         {
-            Dictionary<int, object> dict = new Dictionary<int, object>();
+            Dictionary<int, BrokerRepositorySecurity> dict = new Dictionary<int, BrokerRepositorySecurity>();
             Regex regex = new Regex(@$"^{reg_str}(\w*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
             int max_combo_list_count = 30;
             int added_item_to_list = 0;
 
             var response = await GetPage("https://www.finam.ru/cache/icharts/icharts.js");
-            List<FinamSecurity> _finamSecurities = new List<FinamSecurity>();
+            List<BrokerRepositorySecurity> _finamSecurities = new List<BrokerRepositorySecurity>();
             string[] arraySets = response.Split('=');
             string[] arrayIds = arraySets[1].Split('[')[1].Split(']')[0].Split(',');
 
@@ -54,11 +54,13 @@ namespace MyWebSite.Tools
             string[] arrayEmitentChild = arraySets[7].Split('[')[1].Split(']')[0].Split(',');
             string[] arrayEmitentUrls = arraySets[8].Split('{')[1].Split('}')[0].Split(',');
 
-            _finamSecurities = new List<FinamSecurity>();
+            _finamSecurities = new List<BrokerRepositorySecurity>();
 
             for (int i = 0; i < arrayIds.Length; i++)
             {
-                FinamSecurity sec2 = new FinamSecurity()
+                var tt = arrayEmitentUrls[i].Split(':')[1];
+
+                BrokerRepositorySecurity sec2 = new BrokerRepositorySecurity()
                 {
                     Code = arrayCodes[i],
                     Decp = arrayDecp[i].Split(':')[1],

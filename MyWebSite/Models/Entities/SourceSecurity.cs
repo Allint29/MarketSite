@@ -12,6 +12,7 @@ namespace MyWebSite.Models.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<>
+        public List<BrokerRepositorySecurity> BrokerRepositorySecurities { get; set; } = new List<BrokerRepositorySecurity>();
+
     }
 }

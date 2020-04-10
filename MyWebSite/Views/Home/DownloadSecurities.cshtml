@@ -2,7 +2,7 @@
     ViewData["Title"] = "DownloadSecurities";
 }
 @using System.Diagnostics.Eventing.Reader
-@model Dictionary<int, FinamSecurity>
+@model Dictionary<int, BrokerRepositorySecurity>
     <div class="text-center">
         <h3 class="display-4">Скачивание инструмента с сайта финам</h3>
 
@@ -17,7 +17,9 @@
                 </div>
             </div>
         </form>
-        <select name="security_id" asp-items="@ViewBag.SecuritiesDictionary"></select>
+        <!--ListBrokerRepositorySecurities-->
+        <list-broker-repository-securities name="security_id" elements="@ViewBag.SecuritiesDictionary"></list-broker-repository-securities>
+        <!--<select name="security_id" asp-items="@ViewBag.SecuritiesDictionary"></select>-->
 
         @if (Model != null && Model.Count() > 0)
         {

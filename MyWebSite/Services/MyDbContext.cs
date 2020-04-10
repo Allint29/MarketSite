@@ -139,8 +139,8 @@ namespace MyWebSite.Services
 
             _create_database_table_one_source_securities =
                 $@"use {_nameDatabase}; " +
-                $@"if object_id(N'{_nameDataSpace}.OneSourceSecurities') is null " +
-                $@"create table {_nameDataSpace}.OneSourceSecurities( " +
+                $@"if object_id(N'{_nameDataSpace}.BrokerRepositorySecurity') is null " +
+                $@"create table {_nameDataSpace}.BrokerRepositorySecurity( " +
                 $@"Id int identity not null, " +
                 $@"IdInt int null, " +
                 $@"IdString nvarchar(100) null, " +
@@ -152,8 +152,8 @@ namespace MyWebSite.Services
                 $@"EmitentChild nvarchar(20) not null, " +
                 $@"Url nvarchar(1000) not null, " +
                 $@"Source_Id int not null, " +
-                $@"constraint pk_{_nameDataSpace}_OneSourceSecurities_Id primary key(Id), " +
-                $@"constraint fk_{_nameDataSpace}_OneSourceSecurities_SourcesSecurities foreign key (Source_Id) references {_nameDataSpace}.SourcesSecurities (Id) on delete cascade " +
+                $@"constraint pk_{_nameDataSpace}_BrokerRepositorySecurity_Id primary key(Id), " +
+                $@"constraint fk_{_nameDataSpace}_BrokerRepositorySecurity_SourcesSecurities foreign key (Source_Id) references {_nameDataSpace}.SourcesSecurities (Id) on delete cascade " +
                 $@") ";
 
             //Строка создания таблицы обезличенных сделок
@@ -171,9 +171,9 @@ namespace MyWebSite.Services
                    $@"Vol int not null, " +
                    $@"Oper nvarchar(20) null, " +
                    $@"Exchange_Id bigint null, " +
-                   $@"OneSourceSecurities_Id int null, " +
+                   $@"BrokerRepositorySecurity_Id int null, " +
                    $@"constraint pk_{_nameDataSpace}_ImpersonalTrades_Id primary key(Id), " +
-                   $@"constraint fk_{_nameDataSpace}_ImpersonalTrades_OneSourceSecurities foreign key (OneSourceSecurities_Id) references {_nameDataSpace}.OneSourceSecurities (Id) on delete cascade " +
+                   $@"constraint fk_{_nameDataSpace}_ImpersonalTrades_BrokerRepositorySecurity foreign key (BrokerRepositorySecurity_Id) references {_nameDataSpace}.BrokerRepositorySecurity (Id) on delete cascade " +
                    $@") ";
 
             #endregion
@@ -249,7 +249,7 @@ namespace MyWebSite.Services
                     SqlCommand cmdCreateTableSourcesSecurities = new SqlCommand(_create_database_sources_securities, connection);
                     SqlCommand cmdFillSourcesSecurities = new SqlCommand(_fill_sources_securities_base_data, connection);
 
-                    SqlCommand cmdCreateTableOneSourceSecurities = new SqlCommand(_create_database_table_one_source_securities, connection);
+                    SqlCommand cmdCreateTableBrokerRepositorySecurity = new SqlCommand(_create_database_table_one_source_securities, connection);
                     SqlCommand cmdCreateTableImpersonalTrades = new SqlCommand(_create_database_table_ImpersonalTrades_string, connection);
 
                     cmdCreateDatabase.ExecuteNonQuery();
@@ -257,7 +257,7 @@ namespace MyWebSite.Services
                     cmdCreateTableSourcesSecurities.ExecuteNonQuery();
                     cmdFillSourcesSecurities.ExecuteNonQuery();
 
-                    cmdCreateTableOneSourceSecurities.ExecuteNonQuery();
+                    cmdCreateTableBrokerRepositorySecurity.ExecuteNonQuery();
                     cmdCreateTableImpersonalTrades.ExecuteNonQuery();
 
                     Debug.WriteLine("Новая база создана.");
