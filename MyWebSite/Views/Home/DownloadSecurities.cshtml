@@ -3,34 +3,34 @@
 }
 @using System.Diagnostics.Eventing.Reader
 @model Dictionary<int, BrokerRepositorySecurity>
-    <div class="text-center">
-        <h3 class="display-4">Скачивание инструмента с сайта финам</h3>
+<div>
+    <h3 class="display-4">Скачивание инструмента с сайта финам</h3>
 
-        <form asp-action="DownloadSecurities" asp-controller="Home" asp-antiforgery="true">
-            <div>
-                <div>
-                    <label asp="security"></label>
-                    <input asp type="text" name="security_name" value="@ViewBag.SecName" />
+    <form asp-action="DownloadSecurities" asp-controller="Home" asp-antiforgery="true">
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <div class="col justify-content-center">
+                    <input placeholder="Название инструмента для поиска" class="form-control lbl-primary" accesskeyasp-type="text" name="security_name" id="security_name" value="@ViewBag.SecName" />
                 </div>
-                <div>
-                    <input type="submit" value="Save" />
+                <div class="col justify-content-center">
+                    <input class="btn-primary" type="submit" value="Найти инструмент" />
+                </div>
+                <div class="col justify-content-center">
+                    <label for="security_id" class="lbl-primary">Найденные инструменты</label>
+                </div>
+                <div class="col justify-content-center">
+                    <select-broker-repository-securities name="security_id" id="security_id" class="form-control lbl-primary" elements="@ViewBag.SecuritiesDictionary"></select-broker-repository-securities>
                 </div>
             </div>
-        </form>
-        <!--ListBrokerRepositorySecurities-->
-        <list-broker-repository-securities name="security_id" elements="@ViewBag.SecuritiesDictionary"></list-broker-repository-securities>
-        <!--<select name="security_id" asp-items="@ViewBag.SecuritiesDictionary"></select>-->
+        </div>
+    </form>
 
-        @if (Model != null && Model.Count() > 0)
-        {
-            <h3>В списке @Model.Count инструментов</h3>
-            @foreach (var sec in Model)
-            {
-                <p>@sec.Key @sec.Value.Name</p>
-            }
-        }
-        else
-        {
-            <h3>Уточните поиск, элементы не найдены или их больше 30</h3>
-        }
-    </div>
+    @if (@ViewBag.SecuritiesDictionary != null)
+    {
+        <list-broker-repository-securities class="myclass" name="security_id2" elements="@ViewBag.SecuritiesDictionary"></list-broker-repository-securities>
+    }
+    else
+    {
+        <h3>Уточните поиск, элементы не найдены или их больше 30</h3>
+    }
+</div>

@@ -75,26 +75,18 @@ namespace MyWebSite.Controllers
             var g = Request.Form.Keys;
             //RequestToFinam request_to_finam
             var dict_securities = await FinamArraySecuritiesNames.GetSecurityComboList(security_name);
-            var dict_to_show = new Dictionary<int, BrokerRepositorySecurity>();
+           
             ViewBag.SecName = security_name;
             ViewBag.SecuritiesDictionary = dict_securities;
-            //FinamSecurityViewModel[] dic_sec = new FinamSecurityViewModel[dict_securities.Count()];
-            //
-            //for (int i = 0; i<dict_securities.Count(); i++)
-            //{
-            //    var t = (BrokerRepositorySecurity) dict_securities[i];
-            //    int res;
-            //    if (Int32.TryParse(t.IdString, out res))
-            //    {
-            //        dic_sec[i] = new FinamSecurityViewModel(){Id = res, Name = $"{t.Name} - {t.IdString}"};
-            //        dict_to_show.Add(res, t);
-            //    }
-            //    
-            //}
+            ViewBag.SecCount = dict_securities.Count().ToString();
 
-            //ViewBag.SecuritiesDictionary = new SelectList(dic_sec, "Id", "Name");
+            return View();
+        }
 
-            return View(dict_to_show);
+        public async Task<IActionResult> DownloadFileFromFinam()
+        {
+
+            return View();
         }
 
         public IActionResult Privacy()
