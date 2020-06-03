@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using MyWebSite.Interfaces;
 
 namespace MyWebSite.Models.Entities
 {
@@ -26,7 +27,7 @@ namespace MyWebSite.Models.Entities
         /// securuty name
         /// название инструмена
         /// </summary>
-        public string Name;
+        public string Name { get; set; }
 
         /// <summary>
         /// full name
@@ -231,6 +232,8 @@ namespace MyWebSite.Models.Entities
             return result;
         }
 
+        
+        
     }
 
     /// <summary>

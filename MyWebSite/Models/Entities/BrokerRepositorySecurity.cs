@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MyWebSite.Interfaces;
 using MyWebSite.Models.Entities;
 
 namespace MyWebSite.Models
@@ -11,7 +12,7 @@ namespace MyWebSite.Models
     /// security in Finam specification
     /// контракт в репозитории брокера
     /// </summary>
-    public class BrokerRepositorySecurity
+    public class BrokerRepositorySecurity: ISelectable<BrokerRepositorySecurity>
     {
         public int Id { get; set; }
         
@@ -22,7 +23,7 @@ namespace MyWebSite.Models
         public int? IdInt 
         {
             get { return _idInt; }
-            private set
+            set
             {
                 if (Int32.TryParse(value.ToString(), out var result))
                 {
@@ -73,7 +74,7 @@ namespace MyWebSite.Models
         public string EmitentChild { get; set; }
 
         /// <summary>
-        /// web-site adress
+        /// web-site address
         /// адрес на сайте
         /// </summary>
         public string Url { get; set; }

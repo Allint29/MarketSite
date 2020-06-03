@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace MyWebSite.Models
 {
+    /// <summary>
+    /// Класс настройка для запроса к серверу финам
+    /// </summary>
     public class RequestToFinam
     {
         public string SecurityName { get; set; }

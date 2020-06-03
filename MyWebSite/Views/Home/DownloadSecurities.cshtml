@@ -1,36 +1,64 @@
 ﻿@{
-    ViewData["Title"] = "DownloadSecurities";
+    ViewData["Title"] = "Скачать сделки";
 }
 @using System.Diagnostics.Eventing.Reader
 @model Dictionary<int, BrokerRepositorySecurity>
-<div>
-    <h3 class="display-4">Скачивание инструмента с сайта финам</h3>
+    <div>
+        <h3 class="display-4">Скачивание инструмента с сайта финам</h3>
 
-    <form asp-action="DownloadSecurities" asp-controller="Home" asp-antiforgery="true">
-        <div class="container">
-            <div class="row justify-content-md-center">
-                <div class="col justify-content-center">
-                    <input placeholder="Название инструмента для поиска" class="form-control lbl-primary" accesskeyasp-type="text" name="security_name" id="security_name" value="@ViewBag.SecName" />
-                </div>
-                <div class="col justify-content-center">
-                    <input class="btn-primary" type="submit" value="Найти инструмент" />
-                </div>
-                <div class="col justify-content-center">
-                    <label for="security_id" class="lbl-primary">Найденные инструменты</label>
-                </div>
-                <div class="col justify-content-center">
-                    <select-broker-repository-securities name="security_id" id="security_id" class="form-control lbl-primary" elements="@ViewBag.SecuritiesDictionary"></select-broker-repository-securities>
+        <form asp-action="DownloadSecurities" asp-controller="Home" asp-antiforgery="true">
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col justify-content-center">
+                        <label for="source_security_id" class="lbl-primary">Источник</label>
+                        <select-source-securities name="source_security_id" id="source_security_id" class="form-control lbl-primary" elements="@ViewBag.SourceSecurityList"></select-source-securities>
+                    </div>
+                    <div class="col justify-content-center">
+                        <label for="security_name" class="lbl-primary">Фильтр инструменов</label>
+                        <input placeholder="Название инструмента для поиска" class="form-control lbl-primary" accesskeyasp-type="text" name="security_name" id="security_name" value="@ViewBag.SecName"/>
+                    </div>
+                    <div class="col justify-content-center">
+                        <input class="btn-primary" type="submit" value="Найти инструмент"/>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
 
-    @if (@ViewBag.SecuritiesDictionary != null)
-    {
-        <list-broker-repository-securities class="myclass" name="security_id2" elements="@ViewBag.SecuritiesDictionary"></list-broker-repository-securities>
-    }
-    else
-    {
-        <h3>Уточните поиск, элементы не найдены или их больше 30</h3>
-    }
-</div>
+        <form asp-action="DownloadFileFromFinam" asp-controller="Home" asp-antiforgery="true">
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col justify-content-center">
+                        <label for="combo_security_id" class="lbl-primary">Найденные инструменты</label>
+                        <select-broker-repository-securities name="combo_security_id" id="combo_security_id" class="form-control lbl-primary" elements="@ViewBag.BrokerRepositorySecurities"></select-broker-repository-securities>
+                    </div>
+
+                    <div class="col justify-content-center">
+                        <label class="lbl-primary" for="start_date">Start date:</label>
+                        <input class="form-control lbl-primary" type="date" id="start_date" name="start_date"
+                               value="@DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd")"
+                               min="2000-01-01" max="@DateTime.Today.ToString("yyyy-MM-dd")">
+                    </div>
+                    <div class="col justify-content-center">
+                        <label class="lbl-primary" for="end_date">End date:</label>
+                        <input class="form-control lbl-primary" type="date" id="end_date" name="end_date"
+                               value="@DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd")"
+                               min="2000-01-01" max="@DateTime.Today.ToString("yyyy-MM-dd")">
+                    </div>
+                    <div class="col justify-content-center">
+                        <input class="btn-primary" type="submit" value="Скачать инструмент" />
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+
+        @if (@ViewBag.SecuritiesDictionary != null || @ViewBag.SecCount > 30)
+        {
+            <list-broker-repository-securities class="myclass" name="security_id2" elements="@ViewBag.SecuritiesDictionary"></list-broker-repository-securities>
+        }
+        else
+        {
+            <h3>Уточните поиск, элементы не найдены или их больше 30</h3>
+        }
+    </div>

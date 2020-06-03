@@ -9,16 +9,18 @@ namespace MyWebSite.TagHelpers
 {
     public class SelectBrokerRepositorySecuritiesTagHelper : TagHelper
     {
-        public Dictionary<int, BrokerRepositorySecurity> Elements { get; set; }
+        public List<BrokerRepositorySecurity> Elements { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             output.TagName = "select";
             string listContent = "<option disabled>Выберите инструмент</option>";
 
+            //В id селекта, лежат Id инструмента в БД
             if (Elements != null)
                 foreach (var item in Elements)
-                    listContent += "<option " + "value=\""+ item.Value.IdString + "\">" + item.Value.Name + "</option>";
+                    listContent += $"<option value=\"{item.Id}\">{item.Name} source={item?.SourceSecurity.Name}</option>";
+            
 
             //<select size="3" multiple name="hero[]">
             //<option disabled>Выберите героя</option>
